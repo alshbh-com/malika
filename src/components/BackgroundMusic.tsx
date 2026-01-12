@@ -35,6 +35,21 @@ export const BackgroundMusicProvider = ({ children }: BackgroundMusicProps) => {
     audio.currentTime = 45; // Start from second 45
     audioRef.current = audio;
 
+    // Try to autoplay immediately
+    const tryAutoplay = () => {
+      if (audioRef.current) {
+        audioRef.current.play().then(() => {
+          setIsPlaying(true);
+          setHasInteracted(true);
+        }).catch(() => {
+          // Autoplay blocked, will try on first interaction
+        });
+      }
+    };
+
+    // Attempt autoplay after a short delay
+    setTimeout(tryAutoplay, 100);
+
     return () => {
       if (audioRef.current) {
         audioRef.current.pause();
@@ -48,9 +63,7 @@ export const BackgroundMusicProvider = ({ children }: BackgroundMusicProps) => {
       if (!hasInteracted && audioRef.current) {
         audioRef.current.play().then(() => {
           setIsPlaying(true);
-        }).catch((err) => {
-          console.log("Autoplay prevented:", err);
-        });
+        }).catch(() => {});
         setHasInteracted(true);
       }
     };
@@ -58,11 +71,15 @@ export const BackgroundMusicProvider = ({ children }: BackgroundMusicProps) => {
     document.addEventListener("click", handleFirstInteraction);
     document.addEventListener("touchstart", handleFirstInteraction);
     document.addEventListener("scroll", handleFirstInteraction);
+    document.addEventListener("keydown", handleFirstInteraction);
+    document.addEventListener("mousemove", handleFirstInteraction, { once: true });
 
     return () => {
       document.removeEventListener("click", handleFirstInteraction);
       document.removeEventListener("touchstart", handleFirstInteraction);
       document.removeEventListener("scroll", handleFirstInteraction);
+      document.removeEventListener("keydown", handleFirstInteraction);
+      document.removeEventListener("mousemove", handleFirstInteraction);
     };
   }, [hasInteracted]);
 
