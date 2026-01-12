@@ -12,15 +12,16 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      {/* Subtle background image */}
+      {/* Background image overlay */}
       <div 
-        className="fixed inset-0 -z-10 pointer-events-none"
+        className="fixed inset-0 z-0 pointer-events-none"
         style={{
           backgroundImage: `url(${coupleBackground})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: 'fixed',
-          opacity: 0.25,
+          opacity: 0.35,
+          mixBlendMode: 'multiply',
         }}
       />
       <Toaster />
