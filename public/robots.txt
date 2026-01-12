@@ -1,14 +1,3 @@
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
+# This is a private website - do not index
 User-agent: *
-Allow: /
+Disallow: /
