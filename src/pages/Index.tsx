@@ -10,7 +10,8 @@ import VoiceMessageSection from "@/components/VoiceMessageSection";
 import FinalWordsSection from "@/components/FinalWordsSection";
 import ClosureSection from "@/components/ClosureSection";
 import AdminPanel from "@/components/AdminPanel";
-import BackgroundMusic from "@/components/BackgroundMusic";
+import { BackgroundMusicProvider } from "@/components/BackgroundMusic";
+import ScrollIndicator from "@/components/ScrollIndicator";
 
 const Index = () => {
   const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set());
@@ -60,61 +61,63 @@ const Index = () => {
   };
 
   return (
-    <main className="bg-background">
-      {/* Admin Panel */}
-      <AdminPanel />
-      
-      {/* Background Music */}
-      <BackgroundMusic />
+    <BackgroundMusicProvider>
+      <main className="bg-background">
+        {/* Admin Panel */}
+        <AdminPanel />
+        
+        {/* Scroll Indicator */}
+        <ScrollIndicator />
 
-      {/* Section 1: Opening */}
-      <OpeningSection onContinue={handleContinue} />
+        {/* Section 1: Opening */}
+        <OpeningSection onContinue={handleContinue} />
 
-      {/* Section 2: First Photos */}
-      <div ref={sectionRefs.photo}>
-        <PhotoMemorySection isVisible={visibleSections.has("photo")} />
-      </div>
+        {/* Section 2: First Photos */}
+        <div ref={sectionRefs.photo}>
+          <PhotoMemorySection isVisible={visibleSections.has("photo")} />
+        </div>
 
-      {/* Section 3: Love Message */}
-      <div ref={sectionRefs.love}>
-        <AccountabilitySection isVisible={visibleSections.has("love")} />
-      </div>
+        {/* Section 3: Love Message */}
+        <div ref={sectionRefs.love}>
+          <AccountabilitySection isVisible={visibleSections.has("love")} />
+        </div>
 
-      {/* Section 4: More Photos */}
-      <div ref={sectionRefs.gallery}>
-        <PhotoGallerySection isVisible={visibleSections.has("gallery")} />
-      </div>
+        {/* Section 4: More Photos */}
+        <div ref={sectionRefs.gallery}>
+          <PhotoGallerySection isVisible={visibleSections.has("gallery")} />
+        </div>
 
-      {/* Section 5: Feelings */}
-      <div ref={sectionRefs.feelings}>
-        <SharedFeelingsSection isVisible={visibleSections.has("feelings")} />
-      </div>
+        {/* Section 5: Feelings */}
+        <div ref={sectionRefs.feelings}>
+          <SharedFeelingsSection isVisible={visibleSections.has("feelings")} />
+        </div>
 
-      {/* Section 6: Even More Photos */}
-      <div ref={sectionRefs.morePhotos}>
-        <MorePhotosSection isVisible={visibleSections.has("morePhotos")} />
-      </div>
+        {/* Section 6: Even More Photos */}
+        <div ref={sectionRefs.morePhotos}>
+          <MorePhotosSection isVisible={visibleSections.has("morePhotos")} />
+        </div>
 
-      {/* Section 7: Mohamed's Photos */}
-      <div ref={sectionRefs.mohamed}>
-        <MohamedSection isVisible={visibleSections.has("mohamed")} />
-      </div>
+        {/* Section 7: Mohamed's Photos */}
+        <div ref={sectionRefs.mohamed}>
+          <MohamedSection isVisible={visibleSections.has("mohamed")} />
+        </div>
 
-      {/* Section 8: Voice Message */}
-      <div ref={sectionRefs.voiceMessage}>
-        <VoiceMessageSection isVisible={visibleSections.has("voiceMessage")} />
-      </div>
+        {/* Section 8: Voice Message */}
+        <div ref={sectionRefs.voiceMessage}>
+          <VoiceMessageSection isVisible={visibleSections.has("voiceMessage")} />
+        </div>
 
-      {/* Section 9: Final Words */}
-      <div ref={sectionRefs.finalWords}>
-        <FinalWordsSection isVisible={visibleSections.has("finalWords")} />
-      </div>
+        {/* Section 9: Final Words */}
+        <div ref={sectionRefs.finalWords}>
+          <FinalWordsSection isVisible={visibleSections.has("finalWords")} />
+        </div>
 
-      {/* Section 10: Closure */}
-      <div ref={sectionRefs.closure}>
-        <ClosureSection isVisible={visibleSections.has("closure")} />
-      </div>
-    </main>
+        {/* Section 10: Closure */}
+        <div ref={sectionRefs.closure}>
+          <ClosureSection isVisible={visibleSections.has("closure")} />
+        </div>
+      </main>
+    </BackgroundMusicProvider>
   );
 };
 

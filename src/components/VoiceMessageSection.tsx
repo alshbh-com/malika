@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Play, Pause, Heart, Mic } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { useMusic } from "./BackgroundMusic";
 
 interface VoiceMessage {
   id: string;
@@ -17,6 +18,7 @@ const VoiceMessageSection = ({ isVisible }: VoiceMessageSectionProps) => {
   const [playingId, setPlayingId] = useState<string | null>(null);
   const [progress, setProgress] = useState<{ [key: string]: number }>({});
   const audioRefs = useRef<{ [key: string]: HTMLAudioElement }>({});
+  const { pauseMusic, resumeMusic } = useMusic();
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -51,13 +53,20 @@ const VoiceMessageSection = ({ isVisible }: VoiceMessageSectionProps) => {
     if (playingId === id) {
       audioRefs.current[id]?.pause();
       setPlayingId(null);
+      resumeMusic(); // Resume background music when voice stops
     } else {
       // Stop any currently playing audio
       Object.values(audioRefs.current).forEach(audio => audio.pause());
       
+      // Pause background music when voice plays
+      pauseMusic();
+      
       if (!audioRefs.current[id]) {
         audioRefs.current[id] = new Audio(url);
-        audioRefs.current[id].onended = () => setPlayingId(null);
+        audioRefs.current[id].onended = () => {
+          setPlayingId(null);
+          resumeMusic(); // Resume background music when voice ends
+        };
         audioRefs.current[id].ontimeupdate = () => {
           const audio = audioRefs.current[id];
           if (audio) {
