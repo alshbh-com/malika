@@ -1,14 +1,14 @@
 import { Heart } from "lucide-react";
-import malika1 from "@/assets/malika-1.jpg";
-import malika2 from "@/assets/malika-2.jpg";
-import malika3 from "@/assets/malika-3.jpg";
+import malika7 from "@/assets/malika-7.jpg";
+import malika8 from "@/assets/malika-8.jpg";
+import malika9 from "@/assets/malika-9.jpg";
 
-interface PhotoMemorySectionProps {
+interface MorePhotosSectionProps {
   isVisible: boolean;
 }
 
-const PhotoMemorySection = ({ isVisible }: PhotoMemorySectionProps) => {
-  const photos = [malika1, malika2, malika3];
+const MorePhotosSection = ({ isVisible }: MorePhotosSectionProps) => {
+  const photos = [malika7, malika8, malika9];
 
   return (
     <section className="section-container bg-secondary/30">
@@ -16,7 +16,7 @@ const PhotoMemorySection = ({ isVisible }: PhotoMemorySectionProps) => {
         
         {/* Section title */}
         <h2 className="section-heading text-foreground mb-10">
-          صورك اللي بحبها
+          كل لحظة معاكِ غالية
         </h2>
 
         {/* Photo grid */}
@@ -37,7 +37,7 @@ const PhotoMemorySection = ({ isVisible }: PhotoMemorySectionProps) => {
                 className="w-full h-full object-cover"
               />
               {/* Soft gradient overlay */}
-              <div className="absolute inset-0 photo-overlay opacity-40" />
+              <div className="absolute inset-0 photo-overlay opacity-30" />
             </div>
           ))}
         </div>
@@ -46,7 +46,7 @@ const PhotoMemorySection = ({ isVisible }: PhotoMemorySectionProps) => {
         <div className="flex items-center justify-center gap-3">
           <Heart className="w-4 h-4 text-primary fill-primary/50" />
           <p className="emotional-text text-muted-foreground">
-            كل صورة فيكِ بتحكي قصة حب
+            جمالك مش محتاج كلام
           </p>
           <Heart className="w-4 h-4 text-primary fill-primary/50" />
         </div>
@@ -55,4 +55,4 @@ const PhotoMemorySection = ({ isVisible }: PhotoMemorySectionProps) => {
   );
 };
 
-export default PhotoMemorySection;
+export default MorePhotosSection;
