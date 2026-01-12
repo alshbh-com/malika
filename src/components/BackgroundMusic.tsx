@@ -24,8 +24,8 @@ export const BackgroundMusicProvider = ({ children }: BackgroundMusicProps) => {
   const [wasPausedByVoice, setWasPausedByVoice] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Using a more reliable music URL
-  const musicUrl = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
+  // Local music file
+  const musicUrl = "/audio/background-music.mp3";
 
   useEffect(() => {
     const audio = new Audio(musicUrl);

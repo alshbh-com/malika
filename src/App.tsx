@@ -5,12 +5,24 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import coupleBackground from "@/assets/couple-background.jpg";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
+      {/* Subtle background image */}
+      <div 
+        className="fixed inset-0 -z-10 pointer-events-none"
+        style={{
+          backgroundImage: `url(${coupleBackground})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed',
+          opacity: 0.06,
+        }}
+      />
       <Toaster />
       <Sonner />
       <BrowserRouter>
