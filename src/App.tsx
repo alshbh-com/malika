@@ -21,8 +21,7 @@ const App = () => (
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: 'fixed',
-          opacity: 0.35,
-          mixBlendMode: 'multiply',
+          opacity: 0.18,
         }}
       />
       {/* Floating Hearts */}
