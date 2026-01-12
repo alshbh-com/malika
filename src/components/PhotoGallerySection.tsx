@@ -1,22 +1,22 @@
 import { Heart } from "lucide-react";
-import malika1 from "@/assets/malika-1.jpg";
-import malika2 from "@/assets/malika-2.jpg";
-import malika3 from "@/assets/malika-3.jpg";
+import malika4 from "@/assets/malika-4.jpg";
+import malika5 from "@/assets/malika-5.jpg";
+import malika6 from "@/assets/malika-6.jpg";
 
-interface PhotoMemorySectionProps {
+interface PhotoGallerySectionProps {
   isVisible: boolean;
 }
 
-const PhotoMemorySection = ({ isVisible }: PhotoMemorySectionProps) => {
-  const photos = [malika1, malika2, malika3];
+const PhotoGallerySection = ({ isVisible }: PhotoGallerySectionProps) => {
+  const photos = [malika4, malika5, malika6];
 
   return (
-    <section className="section-container bg-secondary/30">
+    <section className="section-container bg-secondary/20">
       <div className={`max-w-4xl mx-auto text-center transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
         
         {/* Section title */}
         <h2 className="section-heading text-foreground mb-10">
-          صورك اللي بحبها
+          لحظات بتسعدني
         </h2>
 
         {/* Photo grid */}
@@ -37,7 +37,7 @@ const PhotoMemorySection = ({ isVisible }: PhotoMemorySectionProps) => {
                 className="w-full h-full object-cover"
               />
               {/* Soft gradient overlay */}
-              <div className="absolute inset-0 photo-overlay opacity-40" />
+              <div className="absolute inset-0 photo-overlay opacity-30" />
             </div>
           ))}
         </div>
@@ -46,7 +46,7 @@ const PhotoMemorySection = ({ isVisible }: PhotoMemorySectionProps) => {
         <div className="flex items-center justify-center gap-3">
           <Heart className="w-4 h-4 text-primary fill-primary/50" />
           <p className="emotional-text text-muted-foreground">
-            كل صورة فيكِ بتحكي قصة حب
+            ابتسامتك بتنوّر الدنيا
           </p>
           <Heart className="w-4 h-4 text-primary fill-primary/50" />
         </div>
@@ -55,4 +55,4 @@ const PhotoMemorySection = ({ isVisible }: PhotoMemorySectionProps) => {
   );
 };
 
-export default PhotoMemorySection;
+export default PhotoGallerySection;

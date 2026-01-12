@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Heart } from "lucide-react";
 
 interface FinalWordsSectionProps {
   isVisible: boolean;
@@ -8,11 +9,11 @@ const FinalWordsSection = ({ isVisible }: FinalWordsSectionProps) => {
   const [revealedLines, setRevealedLines] = useState(0);
 
   const lines = [
-    "I don't expect forgiveness.",
-    "I don't expect a response.",
-    "But I do want you to know",
-    "that you mattered.",
-    "That you still do.",
+    "مليكة...",
+    "انتِ أحلى حاجة حصلتلي.",
+    "بحبك من قلبي.",
+    "وهفضل أحبك.",
+    "للأبد. ♥",
   ];
 
   useEffect(() => {
@@ -31,7 +32,7 @@ const FinalWordsSection = ({ isVisible }: FinalWordsSectionProps) => {
           {lines.map((line, index) => (
             <p
               key={index}
-              className={`emotional-text text-lg md:text-xl transition-all duration-600`}
+              className="emotional-text text-xl md:text-2xl transition-all duration-600"
               style={{
                 opacity: revealedLines > index ? 1 : 0,
                 transform: revealedLines > index ? 'translateY(0)' : 'translateY(10px)',
@@ -42,6 +43,14 @@ const FinalWordsSection = ({ isVisible }: FinalWordsSectionProps) => {
             </p>
           ))}
         </div>
+
+        {revealedLines >= lines.length && (
+          <div className="mt-10 flex justify-center gap-2 fade-in">
+            <Heart className="w-5 h-5 text-primary fill-primary animate-pulse" />
+            <Heart className="w-6 h-6 text-primary fill-primary animate-pulse delay-100" />
+            <Heart className="w-5 h-5 text-primary fill-primary animate-pulse delay-200" />
+          </div>
+        )}
       </div>
     </section>
   );
