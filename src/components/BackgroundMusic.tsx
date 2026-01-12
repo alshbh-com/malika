@@ -1,18 +1,38 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, createContext, useContext } from "react";
 import { Volume2, VolumeX } from "lucide-react";
 
-const BackgroundMusic = () => {
+// Context to control music from other components
+interface MusicContextType {
+  pauseMusic: () => void;
+  resumeMusic: () => void;
+}
+
+export const MusicContext = createContext<MusicContextType>({
+  pauseMusic: () => {},
+  resumeMusic: () => {},
+});
+
+export const useMusic = () => useContext(MusicContext);
+
+interface BackgroundMusicProps {
+  children: React.ReactNode;
+}
+
+export const BackgroundMusicProvider = ({ children }: BackgroundMusicProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
+  const [wasPausedByVoice, setWasPausedByVoice] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Romantic background music URL (royalty-free)
-  const musicUrl = "https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0c6ff1bab.mp3?filename=romantic-piano-ambient-112673.mp3";
+  // Using a more reliable music URL
+  const musicUrl = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
 
   useEffect(() => {
-    audioRef.current = new Audio(musicUrl);
-    audioRef.current.loop = true;
-    audioRef.current.volume = 0.3;
+    const audio = new Audio(musicUrl);
+    audio.loop = true;
+    audio.volume = 0.2;
+    audio.preload = "auto";
+    audioRef.current = audio;
 
     return () => {
       if (audioRef.current) {
@@ -23,50 +43,72 @@ const BackgroundMusic = () => {
   }, []);
 
   useEffect(() => {
-    // Auto-play on first user interaction with the page
     const handleFirstInteraction = () => {
       if (!hasInteracted && audioRef.current) {
-        audioRef.current.play().catch(() => {
-          // Autoplay blocked, user needs to click
+        audioRef.current.play().then(() => {
+          setIsPlaying(true);
+        }).catch((err) => {
+          console.log("Autoplay prevented:", err);
         });
-        setIsPlaying(true);
         setHasInteracted(true);
       }
     };
 
-    document.addEventListener("click", handleFirstInteraction, { once: true });
-    document.addEventListener("touchstart", handleFirstInteraction, { once: true });
+    document.addEventListener("click", handleFirstInteraction);
+    document.addEventListener("touchstart", handleFirstInteraction);
+    document.addEventListener("scroll", handleFirstInteraction);
 
     return () => {
       document.removeEventListener("click", handleFirstInteraction);
       document.removeEventListener("touchstart", handleFirstInteraction);
+      document.removeEventListener("scroll", handleFirstInteraction);
     };
   }, [hasInteracted]);
 
-  const toggleMusic = () => {
+  const pauseMusic = () => {
+    if (audioRef.current && isPlaying) {
+      audioRef.current.pause();
+      setWasPausedByVoice(true);
+    }
+  };
+
+  const resumeMusic = () => {
+    if (audioRef.current && wasPausedByVoice) {
+      audioRef.current.play().catch(() => {});
+      setWasPausedByVoice(false);
+    }
+  };
+
+  const toggleMusic = (e: React.MouseEvent) => {
+    e.stopPropagation();
     if (audioRef.current) {
       if (isPlaying) {
         audioRef.current.pause();
+        setIsPlaying(false);
       } else {
-        audioRef.current.play();
+        audioRef.current.play().then(() => {
+          setIsPlaying(true);
+        }).catch(() => {});
       }
-      setIsPlaying(!isPlaying);
     }
   };
 
   return (
-    <button
-      onClick={toggleMusic}
-      className="fixed bottom-4 left-4 z-50 p-3 bg-primary/10 hover:bg-primary/20 rounded-full transition-all duration-300 backdrop-blur-sm"
-      aria-label={isPlaying ? "إيقاف الموسيقى" : "تشغيل الموسيقى"}
-    >
-      {isPlaying ? (
-        <Volume2 className="w-5 h-5 text-primary animate-pulse" />
-      ) : (
-        <VolumeX className="w-5 h-5 text-muted-foreground" />
-      )}
-    </button>
+    <MusicContext.Provider value={{ pauseMusic, resumeMusic }}>
+      {children}
+      <button
+        onClick={toggleMusic}
+        className="fixed bottom-4 left-4 z-50 p-3 bg-primary/20 hover:bg-primary/30 rounded-full transition-all duration-300 backdrop-blur-sm border border-primary/20"
+        aria-label={isPlaying ? "إيقاف الموسيقى" : "تشغيل الموسيقى"}
+      >
+        {isPlaying ? (
+          <Volume2 className="w-5 h-5 text-primary animate-pulse" />
+        ) : (
+          <VolumeX className="w-5 h-5 text-muted-foreground" />
+        )}
+      </button>
+    </MusicContext.Provider>
   );
 };
 
-export default BackgroundMusic;
+export default BackgroundMusicProvider;
