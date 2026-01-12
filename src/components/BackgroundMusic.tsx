@@ -30,8 +30,9 @@ export const BackgroundMusicProvider = ({ children }: BackgroundMusicProps) => {
   useEffect(() => {
     const audio = new Audio(musicUrl);
     audio.loop = true;
-    audio.volume = 0.2;
+    audio.volume = 0.1;
     audio.preload = "auto";
+    audio.currentTime = 45; // Start from second 45
     audioRef.current = audio;
 
     return () => {

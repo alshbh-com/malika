@@ -20,7 +20,7 @@ const App = () => (
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: 'fixed',
-          opacity: 0.06,
+          opacity: 0.15,
         }}
       />
       <Toaster />
