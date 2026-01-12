@@ -5,8 +5,12 @@ import AccountabilitySection from "@/components/AccountabilitySection";
 import PhotoGallerySection from "@/components/PhotoGallerySection";
 import SharedFeelingsSection from "@/components/SharedFeelingsSection";
 import MorePhotosSection from "@/components/MorePhotosSection";
+import MohamedSection from "@/components/MohamedSection";
+import VoiceMessageSection from "@/components/VoiceMessageSection";
 import FinalWordsSection from "@/components/FinalWordsSection";
 import ClosureSection from "@/components/ClosureSection";
+import AdminPanel from "@/components/AdminPanel";
+import BackgroundMusic from "@/components/BackgroundMusic";
 
 const Index = () => {
   const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set());
@@ -17,6 +21,8 @@ const Index = () => {
     gallery: useRef<HTMLDivElement>(null),
     feelings: useRef<HTMLDivElement>(null),
     morePhotos: useRef<HTMLDivElement>(null),
+    mohamed: useRef<HTMLDivElement>(null),
+    voiceMessage: useRef<HTMLDivElement>(null),
     finalWords: useRef<HTMLDivElement>(null),
     closure: useRef<HTMLDivElement>(null),
   };
@@ -55,6 +61,12 @@ const Index = () => {
 
   return (
     <main className="bg-background">
+      {/* Admin Panel */}
+      <AdminPanel />
+      
+      {/* Background Music */}
+      <BackgroundMusic />
+
       {/* Section 1: Opening */}
       <OpeningSection onContinue={handleContinue} />
 
@@ -83,12 +95,22 @@ const Index = () => {
         <MorePhotosSection isVisible={visibleSections.has("morePhotos")} />
       </div>
 
-      {/* Section 7: Final Words */}
+      {/* Section 7: Mohamed's Photos */}
+      <div ref={sectionRefs.mohamed}>
+        <MohamedSection isVisible={visibleSections.has("mohamed")} />
+      </div>
+
+      {/* Section 8: Voice Message */}
+      <div ref={sectionRefs.voiceMessage}>
+        <VoiceMessageSection isVisible={visibleSections.has("voiceMessage")} />
+      </div>
+
+      {/* Section 9: Final Words */}
       <div ref={sectionRefs.finalWords}>
         <FinalWordsSection isVisible={visibleSections.has("finalWords")} />
       </div>
 
-      {/* Section 8: Closure */}
+      {/* Section 10: Closure */}
       <div ref={sectionRefs.closure}>
         <ClosureSection isVisible={visibleSections.has("closure")} />
       </div>

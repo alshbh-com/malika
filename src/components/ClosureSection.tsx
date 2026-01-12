@@ -5,9 +5,8 @@ interface ClosureSectionProps {
 }
 
 const ClosureSection = ({ isVisible }: ClosureSectionProps) => {
-  const handleWhatsApp = () => {
-    // Replace with actual WhatsApp number
-    window.open("https://wa.me/", "_blank");
+const handleWhatsApp = () => {
+    window.open("https://wa.me/201278006248", "_blank");
   };
 
   return (
